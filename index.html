@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SpeakSmart AI - Communication Coach</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>🎤 SpeakSmart AI</h1>
+<h3>AI Communication Coach for Placement Students</h3>
+
+<div class="box">
+
+<label>Enter OpenAI API Key</label>
+<input type="password" id="apiKey" placeholder="Paste API key here">
+
+<button onclick="startListening()">🎙 Start Speaking</button>
+
+</div>
+
+<div class="box">
+
+<h3>Your Speech</h3>
+<p id="speechText"></p>
+
+</div>
+
+<div class="box">
+
+<h3>AI Communication Feedback</h3>
+<p id="aiResponse"></p>
+
+</div>
+
+<div class="box">
+
+<h3>Interview Practice Questions</h3>
+
+<button onclick="loadQuestion()">Generate Question</button>
+
+<p id="question"></p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
