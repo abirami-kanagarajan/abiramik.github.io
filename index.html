@@ -1,9 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<title>SpeakSmart AI - Communication Coach</title>
-<link rel="stylesheet" href="style.css">
+
+<title>SpeakSmart AI</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+text-align:center;
+padding:40px;
+}
+
+.box{
+background:white;
+padding:20px;
+margin:20px auto;
+width:60%;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+button{
+padding:12px 18px;
+margin:10px;
+background:#4CAF50;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+}
+
+button:hover{
+background:#3f8d42;
+}
+
+input{
+padding:10px;
+width:60%;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -13,38 +54,49 @@
 
 <div class="box">
 
-<label>Enter OpenAI API Key</label>
+<label>Enter OpenAI API Key</label><br><br>
+
 <input type="password" id="apiKey" placeholder="Paste API key here">
 
-<button onclick="startListening()">🎙 Start Speaking</button>
-
 </div>
+
 
 <div class="box">
 
-<h3>Your Speech</h3>
-<p id="speechText"></p>
+<h3>Interview Question</h3>
+
+<p id="question">Click "Next Question" to start.</p>
+
+<button onclick="generateQuestion()">Next Question</button>
 
 </div>
+
+
+<div class="box">
+
+<h3>Speak Your Answer</h3>
+
+<button onclick="startRecording()">Start Recording</button>
+
+<button onclick="stopRecording()">Stop Recording</button>
+
+<p id="speechText"></p>
+
+<button onclick="getFeedback()">Get AI Feedback</button>
+
+</div>
+
 
 <div class="box">
 
 <h3>AI Communication Feedback</h3>
+
 <p id="aiResponse"></p>
-
-</div>
-
-<div class="box">
-
-<h3>Interview Practice Questions</h3>
-
-<button onclick="loadQuestion()">Generate Question</button>
-
-<p id="question"></p>
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
