@@ -6,23 +6,39 @@ function startRecording(){
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+if(!SpeechRecognition){
+alert("Speech recognition not supported in this browser. Use Google Chrome.");
+return;
+}
+
 recognition = new SpeechRecognition();
 
 recognition.lang = "en-US";
 recognition.continuous = true;
+recognition.interimResults = true;
 
 recordedText = "";
 
 recognition.start();
 
+document.getElementById("speechText").innerText = "Listening...";
+
 recognition.onresult = function(event){
 
-let transcript = event.results[event.results.length - 1][0].transcript;
+let transcript = "";
 
-recordedText += transcript + " ";
+for(let i=0;i<event.results.length;i++){
+transcript += event.results[i][0].transcript;
+}
+
+recordedText = transcript;
 
 document.getElementById("speechText").innerText = recordedText;
 
+};
+
+recognition.onerror = function(event){
+console.log("Speech error:",event.error);
 };
 
 }
@@ -33,6 +49,7 @@ function stopRecording(){
 
 if(recognition){
 recognition.stop();
+document.getElementById("speechText").innerText = recordedText;
 }
 
 }
@@ -44,14 +61,16 @@ async function getFeedback(){
 const apiKey = document.getElementById("apiKey").value;
 
 if(!apiKey){
-
-alert("Please enter OpenAI API key");
-
+alert("Please paste your OpenAI API key");
 return;
-
 }
 
-document.getElementById("aiResponse").innerText="Analyzing speech...";
+if(recordedText==""){
+alert("Please record your speech first");
+return;
+}
+
+document.getElementById("aiResponse").innerText="Analyzing...";
 
 const response = await fetch("https://api.openai.com/v1/chat/completions",{
 
@@ -70,7 +89,7 @@ messages:[
 
 {
 role:"system",
-content:"You are an English communication coach. Improve grammar, provide a professional interview version, explain mistakes and give speaking confidence tips."
+content:"You are an English communication coach. Correct grammar, give professional version, and provide speaking improvement tips."
 },
 
 {
@@ -93,18 +112,17 @@ data.choices[0].message.content;
 
 
 
-// GENERATE INTERVIEW QUESTION
+// GENERATE QUESTION
 async function generateQuestion(){
 
 const apiKey = document.getElementById("apiKey").value;
 
 if(!apiKey){
-
 alert("Please enter API key");
-
 return;
-
 }
+
+document.getElementById("question").innerText="Generating question...";
 
 const response = await fetch("https://api.openai.com/v1/chat/completions",{
 
@@ -123,7 +141,7 @@ messages:[
 
 {
 role:"system",
-content:"Generate one simple placement interview question for students to practice speaking."
+content:"Generate a simple English speaking practice question for placement students."
 }
 
 ]
